@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"file:/C:/Users/Fullmoon/Desktop/mybatis-3-config.dtd">
+<configuration>
+
+<!-- 全局的配置参数 -->
+<!--<settings></settings>-->
+<!-- 定义别名 -->
+<typeAliases>
+	<!-- 针对单个别名定义
+	type:类型的路径
+	alias:别名
+	 -->
+	 <package name="org.pojo"/>
+</typeAliases>
+
+	<!-- 加载映射文件 -->
+	<mappers>
+	<!-- 	<mapper resource="sqlmap/User.xml"/> -->
+		<!-- <mapper resource="mapper/UserMapper.xml"/> -->
+		<!-- 通过mapper接口加载映射文件
+			遵循一些规范:需要将mapper接口类名和mapper.xml映射文件名称保持一致，且在一个目录中
+			上边规范的前提是:使用的是mapper代理方法
+		 -->
+		 <package name="org.mapper"/>
+	</mappers>
+</configuration>

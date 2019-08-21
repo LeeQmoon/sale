@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="org.pojo.User">
+    <id column="u_id" jdbcType="CHAR" property="uId" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="sex" jdbcType="CHAR" property="sex" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    u_id, nick_name, password, sex
+  </sql>
+   <select id="findByLoginnameAndLoginpass" parameterType="map" resultMap="BaseResultMap">
+  	  select * 
+  	    from user 
+  	    where nick_name=#{loginname} and password=#{loginpass}
+  </select>
+  <select id="checkLoginname" parameterType="map" resultType="boolean">
+  	  select count(*)
+  	    from user 
+  	    where nick_name=#{loginname}
+  </select>
+  <insert id="add" parameterType="map">
+  	  insert into user 
+		(u_id,nick_name,password,sex) 
+		values (#{uid},#{loginname},#{loginpass},#{sex})
+  </insert>
+  <select id="checkByPwd" parameterType="map" resultType="boolean">
+  	  select count(*)
+  	    from user 
+  	    where u_id=#{uid} and password=#{old_pwd}
+  </select>
+  <select id="updatePwd" parameterType="map">
+  	  update user
+  	    set password=#{new_pwd}
+  	    where u_id=#{uid}
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where u_id = #{uId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from user
+    where u_id = #{uId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="org.pojo.User">
+    insert into user (u_id, nick_name, password, 
+      sex)
+    values (#{uId,jdbcType=CHAR}, #{nickName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.pojo.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uId != null">
+        u_id,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uId != null">
+        #{uId,jdbcType=CHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.pojo.User">
+    update user
+    <set>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=CHAR},
+      </if>
+    </set>
+    where u_id = #{uId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.pojo.User">
+    update user
+    set nick_name = #{nickName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=CHAR}
+    where u_id = #{uId,jdbcType=CHAR}
+  </update>
+</mapper>

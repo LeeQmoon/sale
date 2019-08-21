@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mapper.BookMapper">
+    <!--将整个查询的结果映射到Book中 给resultMap一个id标识-->
+  <resultMap id="BaseResultMap" type="Book">
+    <!--配置映射的书本信息  -->
+    <!-- id 书本信息中的唯一标识，多个列成主键的话就要声明
+    column:唯一标识的列  property:所映射多个id到java中的属性名 -->
+    <id column="b_id" jdbcType="CHAR" property="bId" />
+    <!-- 配置普通属性 -->
+    <result column="b_name" jdbcType="VARCHAR" property="bName" />
+    <result column="author" jdbcType="VARCHAR" property="author" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="press" jdbcType="VARCHAR" property="press" />
+    <result column="publish_time" jdbcType="CHAR" property="publishTime" />
+    <result column="c_id" jdbcType="CHAR" property="cId" />
+    <result column="image_b" jdbcType="VARCHAR" property="imageB" />
+    <result column="image_s" jdbcType="VARCHAR" property="imageS" />
+    <result column="stock_num" jdbcType="INTEGER" property="stockNum" />
+    <result column="order_by" jdbcType="INTEGER" property="orderBy" />
+  
+  <!-- 配置关联分类信息 -->
+  <!-- association:用于映射关联查询单个对象的信息 -->
+  <!-- 要将关联查询的分类信息映射到Book中的哪个java属性 -->
+  <association property="category" javaType="Category">
+      <id column="c_id" property="cId" />
+      <result column="c_name" property="cName"/>
+  </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    b_id, b_name, author, price, press, publish_time, c_id, image_b, image_s, stock_num, 
+    order_by
+  </sql>
+  <sql id="select_*_sql">
+  	select
+  		b_id,
+		b_name,
+		author,
+		price,
+		press,
+		publish_time,
+		c_id,
+		image_b,
+		image_s
+	from
+		book
+  </sql>
+  
+    <sql id="selectCount">
+  	select 
+  		count(*) 
+  	from 
+  		book
+  </sql>
+  
+ <select id="findByBid" parameterType="string" resultMap="BaseResultMap">
+  	select 
+  		* 
+  	from 
+  		book b,
+  		category c 
+  	where 
+  		b.c_id=c.cid and b.b_id=#{bid}
+ </select>
+  
+ <select id="ByCategory" parameterType="map" resultType="Integer">
+  	select count(*)
+  	from book left join category on book.c_id = category.c_id
+  	where c_name=#{cname}
+  </select>
+  
+   <select id="ByName" parameterType="map" resultType="Integer">
+  	select count(*)
+  	from book 
+  	where b_name=#{bname}
+  </select>
+  
+  <select id="ByAuthor" parameterType="map" resultType="Integer">
+  	select count(*)
+  	from book
+  	where author=#{author}
+  </select>
+  
+  <select id="findByCategory" parameterType="map" resultMap="BaseResultMap">
+  	select *
+  	from book left join category on book.c_id = category.c_id
+  	order by order_by
+  	where c_name=#{cname}
+  	<if test="ps!=null">
+		<if test="start!=null">
+	  	limit 
+	  		#{start},#{ps}
+	  	</if>
+	 </if>
+  </select>
+  
+  <select id="findByBname" parameterType="map" resultMap="BaseResultMap">
+  	select *
+  	from book 
+  	where b_name=#{bname}
+  	order by order_by
+  	<if test="ps!=null">
+		<if test="start!=null">
+	  	limit 
+	  		#{start},#{ps}
+	  	</if>
+	 </if>
+  </select>
+  
+  <select id="findByAuthor" parameterType="map" resultMap="BaseResultMap">
+  	select *
+  	from book
+  	where author=#{author}
+  	order by order_by
+  	<if test="ps!=null">
+		<if test="start!=null">
+	  	limit 
+	  		#{start},#{ps}
+	  	</if>
+	 </if>
+  </select>
+  
+  <select id="findAll" parameterType="map" resultMap="BaseResultMap">
+  	select *
+  	from book
+  	order by order_by
+  	<if test="ps!=null">
+		<if test="start!=null">
+	  	limit 
+	  		#{start},#{ps}
+	  	</if>
+	 </if>
+  </select>
+</mapper>

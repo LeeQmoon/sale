@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mapper.OrderitemMapper">
+  <resultMap id="BaseResultMap" type="org.pojo.Orderitem">
+    <id column="item_id" jdbcType="CHAR" property="itemId" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="sub_total" jdbcType="DECIMAL" property="subTotal" />
+    <result column="b_id" jdbcType="CHAR" property="bId" />
+    <result column="b_name" jdbcType="VARCHAR" property="bName" />
+    <result column="curr_price" jdbcType="DECIMAL" property="currPrice" />
+    <result column="image_s" jdbcType="VARCHAR" property="imageS" />
+    <result column="order_id" jdbcType="CHAR" property="orderId" />
+    <association property="book" column="b_id" select="org.mapper.BookMapper.findByBid"/>
+  	<association property="order" column="order_id" select="org.mapper.OrderMapper.load"/>
+  </resultMap>
+  </resultMap>
+  <sql id="Base_Column_List">
+    item_id, quantity, sub_total, b_id, b_name, curr_price, image_s, order_id
+  </sql>
+  <select id="findByOid" parameterType="string" resultMap="BaseResultMap">
+  	select * 
+  	from orderitem 
+  	where order_id=#{orderid}
+  </select>
+  
+  <select id="load" parameterType="string" resultMap="BaseResultMap">
+  	select *
+  	from orderitem
+  	where item_id=#{itemid}
+  </select>
+  
+  <insert id="addOrderItem" parameterType="list">
+  	insert into orderitem
+  		(
+  		item_id,
+  		quantity,
+  		sub_total,
+  		b_id,
+  		b_name,
+  		"curr_price",
+  		image_s,
+  		order_id
+  		)
+  	values
+  	<foreach collection="list" item="item" index="index"  separator=",">
+  		(
+  		#{item.orderItemId},
+  		#{item.quantity},
+  		#{item.subtotal},
+  		#{item.bid},
+  		#{item.bname},
+  		#{item.currPrice},
+  		#{item.imageb},
+  		#{item.orderid}
+  		)
+  	</foreach>
+  </insert>
+</mapper>

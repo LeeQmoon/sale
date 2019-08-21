@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mapper.CategoryMapper">
+  <resultMap id="BaseResultMap" type="org.pojo.Category">
+    <id column="c_id" jdbcType="CHAR" property="cId" />
+    <result column="c_name" jdbcType="VARCHAR" property="cName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    c_id, c_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from category
+    where c_id = #{cId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from category
+    where c_id = #{cId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="org.pojo.Category">
+    insert into category (c_id, c_name)
+    values (#{cId,jdbcType=CHAR}, #{cName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.pojo.Category">
+    insert into category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cId != null">
+        c_id,
+      </if>
+      <if test="cName != null">
+        c_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cId != null">
+        #{cId,jdbcType=CHAR},
+      </if>
+      <if test="cName != null">
+        #{cName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.pojo.Category">
+    update category
+    <set>
+      <if test="cName != null">
+        c_name = #{cName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where c_id = #{cId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.pojo.Category">
+    update category
+    set c_name = #{cName,jdbcType=VARCHAR}
+    where c_id = #{cId,jdbcType=CHAR}
+  </update>
+</mapper>
