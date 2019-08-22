@@ -6,9 +6,25 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
+
+<script>
+function validateForm(){
+var x=document.forms["myForm"]["bname"].value;
+if (x==null || x==""){
+  alert("此项不能为空！");
+  return false;
+  }
+}
+</script>
+
 <body>
-	 hello....
-	<input type="button" value="首页">
+hello....
+<form name="myForm" action="${pageContext.request.contextPath }/book/findByBname.action" onsubmit="return validateForm()" method="post">
+ <input type="text" name = "bname" >   
+ <input type="submit" value="查询">
+</form> 
+
+<a href="${pageContext.request.contextPath }/book/findAll.action"><input type="button" value="首页"></a>
 	<span>分类
 	<select id="all">
         <option>人文社科</option>
@@ -25,5 +41,6 @@
 	<input type="button" value="订单管理">
 	<a href="${pageContext.request.contextPath }/jsp/user/register.jsp"><input type="button" value="注册"></a>
 	<a href="${pageContext.request.contextPath }/jsp/user/login.jsp"><input type="button" value="登录"></a>
+	<p id="show"></p>
 </body>
 </html>

@@ -63,35 +63,11 @@
   		b.c_id=c.cid and b.b_id=#{bid}
  </select>
   
- <select id="ByCategory" parameterType="map" resultType="Integer">
-  	select count(*)
-  	from book left join category on book.c_id = category.c_id
-  	where c_name=#{cname}
-  </select>
-  
-   <select id="ByName" parameterType="map" resultType="Integer">
-  	select count(*)
-  	from book 
-  	where b_name=#{bname}
-  </select>
-  
-  <select id="ByAuthor" parameterType="map" resultType="Integer">
-  	select count(*)
-  	from book
-  	where author=#{author}
-  </select>
-  
   <select id="findByCategory" parameterType="map" resultMap="BaseResultMap">
   	select *
   	from book left join category on book.c_id = category.c_id
-  	order by order_by
   	where c_name=#{cname}
-  	<if test="ps!=null">
-		<if test="start!=null">
-	  	limit 
-	  		#{start},#{ps}
-	  	</if>
-	 </if>
+  	order by order_by
   </select>
   
   <select id="findByBname" parameterType="map" resultMap="BaseResultMap">
@@ -99,12 +75,6 @@
   	from book 
   	where b_name=#{bname}
   	order by order_by
-  	<if test="ps!=null">
-		<if test="start!=null">
-	  	limit 
-	  		#{start},#{ps}
-	  	</if>
-	 </if>
   </select>
   
   <select id="findByAuthor" parameterType="map" resultMap="BaseResultMap">
@@ -112,23 +82,11 @@
   	from book
   	where author=#{author}
   	order by order_by
-  	<if test="ps!=null">
-		<if test="start!=null">
-	  	limit 
-	  		#{start},#{ps}
-	  	</if>
-	 </if>
   </select>
   
   <select id="findAll" parameterType="map" resultMap="BaseResultMap">
   	select *
   	from book
   	order by order_by
-  	<if test="ps!=null">
-		<if test="start!=null">
-	  	limit 
-	  		#{start},#{ps}
-	  	</if>
-	 </if>
   </select>
 </mapper>

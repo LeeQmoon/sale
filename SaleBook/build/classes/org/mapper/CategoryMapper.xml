@@ -8,6 +8,7 @@
   <sql id="Base_Column_List">
     c_id, c_name
   </sql>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

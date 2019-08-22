@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    
+    <!-- 全局setting配置 -->
+    
+    <!-- 配置别名 -->
+    <typeAliases>
+        <!-- 批量扫描别名 使得在xxxmapper.xml中得以简略得使用类名作为parameterType和reslutType-->
+        <package name="org.pojo"/>
+    </typeAliases>
+    
+    <!-- 配置mapper
+    使用扫描包，单个配置过于麻烦 
+    必须遵循：mapper.xml和mapper.java文件同名且在同一个目录-->
+   <!-- 这是告诉mybatis在哪寻找映射文件
+   对于在src下的文件直接写文件名
+   如果在某包下，需要写明路径 -->
+    <!-- <批量加载xxxmapper.xml> -->
+    <mappers>
+        <package name="org.mapper"/>
+    </mappers>
+    
+</configuration>
