@@ -13,7 +13,7 @@ public interface OrderitemMapper {
 	//生成订单的同时也把item给填充满  用
 	public void add(Map<String,Object>item);
 	
-	//通过订单id来查找对应的item
-	public List<Orderitem> findByOid(String orderid);
+	//通过订单id来查找对应的item 用
+	public List<Orderitem> findByUidAndOid(Map<String,Object>item);
 	
 }

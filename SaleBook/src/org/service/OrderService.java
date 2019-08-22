@@ -32,76 +32,23 @@ public class OrderService implements IOrderService{
 	private OrderitemMapper orderitem_dao;
 	@Autowired
 	private BookMapper book_dao;
-	/*//支付之后需要更新订单状态
-	@Override
-	public void updateStatus(String orderid, int status) {
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("orderid", orderid);
-		map.put("status", status);
-		try {
-			order_dao.updateStatus(map);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
 	
-	//按状态查询订单
-	@Override
-	public PageInfo<Order> findByStatus(int uid,int status, int pc) {
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("uid", uid);
-		map.put("status", status);
-		map.put("start", getStart(pc));
-		List<Order> orderList;
-		try {
-			orderList = order_dao.findByStatus(map);//返回该用户某个状态的订单
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	
-		int total = 0;
-		try {
-			total = order_dao.ByStatus(map);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		System.out.print("=============="+total);
-		int totalpage = total / ps;	
-		PageInfo<Order> pageinfo = toPageBean(orderList, pc);//转为分页
-		pageinfo.setPages(totalpage);//设置该类的总页数
-		pageinfo.setTotal(total);;//该类的总书数
-		System.out.print("=============="+pageinfo.getPages());
-		return pageinfo;//返回某一页
-	}
-	
-	//查找某用户的所有订单
+	//查找某用户的所有订单 在前端判断是否登录 阻止未登录就查询
 	@Override
 	public PageInfo<Order> findAll(String uid, int pc) {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("uid", uid);
-		map.put("ps", ps);
-		map.put("start", getStart(pc));
 		List<Order> orderkList;
 		try {
 			orderkList = order_dao.findAll(map);//返回该用户的所有订单
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		int total = 0;
-		try {
-			total = order_dao.ByUid(map);//返回总的订单数来分页
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		System.out.print("=============="+total);
-		int totalpage = total / ps;	
+		
 		PageInfo<Order> pageinfo = toPageBean(orderkList, pc);//转为分页
-		pageinfo.setPages(totalpage);//设置该类的总页数
-		pageinfo.setTotal(total);;//该类的总书数
-		System.out.print("=============="+pageinfo.getPages());
 		return pageinfo;
 	}
-*/
+
 	
 	public void addOrder(Order order) {
 		
@@ -109,7 +56,6 @@ public class OrderService implements IOrderService{
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("orderid", order.getOrderId());
 		map.put("ordertime", order.getOrderTime());
-		//map.put("total", total);
 		map.put("status", order.getStatus());
 		map.put("address", order.getAddress());
 		map.put("uid", order.getUser().getuId());
@@ -176,11 +122,27 @@ public class OrderService implements IOrderService{
 	}
 
 	//使用插件数据实现分页
-	@SuppressWarnings("unused")
 	private PageInfo<Order> toPageBean(List<Order> orderList,int pc){
 		
         PageHelper.startPage(pc,ps);
         PageInfo<Order> pageinfo = new PageInfo<>(orderList,ps);
 		return pageinfo;
+	}
+
+	//查看某订单详情
+	@Override
+	public List<Orderitem> findItem(String orderid) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("orderid", orderid);
+		List<Orderitem> orderkList = new ArrayList<Orderitem>();
+		for(Orderitem item:orderitem_dao.findByUidAndOid(map)) {
+			//返回该用户的所有订单
+			orderkList.add(item);
+			System.out.println("itemid===="+item.getItemId()+" quantity==="+item.getQuantity()+"  subtotal"+item.getSubTotal()
+			+"  bname=="+item.getbName()+"price=="+item.getPrice());
+		}
+		
+		return orderkList;
+		
 	}
 }

@@ -23,11 +23,7 @@
 	from
 		myorder
   </select>
-   <update id="updateStatus" parameterType="map">
-  	update myorder 
-  	set status=#{status}
-  	where order_id=#{orderid} and order.u_id=#{uid}
-  </update>
+  
   <!-- 先插入部分的数据 -->
   <insert id="add" parameterType="map">
   	insert into myorder(order_id, order_time,status,u_id)values 
@@ -38,35 +34,20 @@
   	#{uid}
   	)
   </insert>
+  
   <update id ="updateTotal" parameterType="map">
       update myorder
       set total_money=#{total}
       where order_id=#{orderid}
   </update>
   
-  <select id="findByStatus" parameterType="map" resultMap="BaseResultMap">
-  	select *
-  	from myorder
-  	where status=#{status} and order.u_id=#{uid}
-  	order by ordertime desc
-  	limit #{start},#{ps}
-  </select>
-  
-  <select id="findByUser" parameterType="map" resultMap="BaseResultMap">
-  	select *
-  	from myorder
-  	where u_id=#{uid}
-  	order by ordertime desc
-  	limit #{start},#{ps}
-  </select>
-  
   <select id="findAll" parameterType="map" resultMap="BaseResultMap">
   	select *
   	from myorder
   	where myorder.u_id=#{uid}
-  	order by ordertime desc
-  	limit #{start},#{ps}
+  	order by order_time desc
   </select>
+  
   <!-- 为了关联查询使用 -->
   <select id="load" parameterType="string" resultMap="BaseResultMap">
   	select *

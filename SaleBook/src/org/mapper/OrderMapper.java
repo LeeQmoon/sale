@@ -10,16 +10,9 @@ public interface OrderMapper {
 	
 	//为了关联查询使用
 	public Order load(String oid) throws SQLException;
-	//更新支付状态
-	public void updateStatus(Map<String,Object> map)throws SQLException;
-	//public void updateStatus(Map<String,Object> map) throws SQLException;
 	//增加订单
 	public void add(Map<String,Object> map) throws SQLException;
-	//通过订单的状态找订单
-	public List<Order> findByStatus(Map<String,Object> map) throws SQLException;
-	//查找某用户的订单
-	public List<Order> findByUser(Map<String,Object> map) throws SQLException;
-	//查找所有的订单
+	//查找用户所有的订单
 	public List<Order> findAll(Map<String,Object> map) throws SQLException;
 	//
 	public void updateTotal(Map<String,Object> map)throws SQLException;

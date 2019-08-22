@@ -18,7 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.github.pagehelper.PageInfo;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -56,8 +59,19 @@ public class OrderController {
 			item.setbId((String) jsonObj.get("bid"));//获取书的id
 			//获取每一本书的数量
 			item.setQuantity((Integer) jsonObj.get("quantity"));
+			item.setItemId(UUID.randomUUID().toString().replace("-", "").toUpperCase());
+			item1.setOrderId(order.getOrderId());
 			list.add(item);//插入orderitem里面		
-		}*/
+		}
+		order.setItem(list);//订单中的各种条目
+		order.setUser(user);//订单所属的用户
+		order.setuId(user.getuId());
+		//传一个order给Service
+		order_service.addOrder(order);//传order过去
+		System.out.print("增加成功！");
+		return map;
+		
+		*/
 		
 		//创建order
 		Order order = new Order();
@@ -88,5 +102,32 @@ public class OrderController {
 		return map;
 	
 	}
+	
+	//查看所有订单
+	@RequestMapping("/findAllOrder.action")
+	public String findAllOrder(@RequestParam(required=true,defaultValue="0")Integer page,ModelMap map,HttpServletRequest request) {
+		User user = (User) request.getSession().getAttribute("sessionUser");
+		PageInfo<Order> orderlist = order_service.findAll(user.getuId(),0);
+		List<Order>list = orderlist.getList();
+		for(Order order:list) {
+			System.out.print("orderid==="+order.getOrderId()+"  ordertime==="+order.getOrderTime()+"  totalmoney==="+order.getTotalMoney()
+			+"  status==="+order.getStatus()+"  uid=="+order.getuId());
+		}
+
+		map.put("list", list);//把modelandview返回给前端
+		map.put("pageinfo", orderlist);//把modelandview返回给前端
+		return "/jsp/showorder";
+	}
+	
+	//查看订单详情
+		@RequestMapping("/findOrderItem.action")
+		public String findOrderItem(@RequestParam(required=true,defaultValue="76850E78B638480AB52D964DFCC76BC4")String orderid,
+				ModelMap map,HttpServletRequest request) {
+			User user = (User) request.getSession().getAttribute("sessionUser");
+			List<Orderitem>list = order_service.findItem(orderid);
+			
+			map.put("list", list);//把modelandview返回给前端
+			return "/jsp/showitem";
+		}
 	
 }

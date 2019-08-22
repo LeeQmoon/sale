@@ -23,7 +23,7 @@
     </span>
 	<a href="${pageContext.request.contextPath }/cart/myCart.action"><input type="button" value="购物车"></a>
 	<input type="button" value="订单管理">
-  	<a href="${pageContext.request.contextPath }/order/addOrder.action"> <input type="button" value="个人信息-更改密码"> </a>
+  	<a href="${pageContext.request.contextPath }/order/findAllOrder.action"> <input type="button" value="个人信息-更改密码"> </a>
   	<a href="${pageContext.request.contextPath }/welcome.jsp"> <input type="button" value="退出"> </a>
 </body>
 </html>

@@ -65,4 +65,10 @@
   		)
   </insert>
   
+   <select id = "findByUidAndOid" parameterType="map" resultType="orderitem">
+       select item_id as itemId,quantity, b_id as bId, b_name as bName, price,order_id as orderId
+       from orderitem
+       where order_id=#{orderid}
+   </select>
+   
 </mapper>
