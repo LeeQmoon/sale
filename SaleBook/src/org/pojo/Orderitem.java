@@ -1,16 +1,16 @@
 package org.pojo;
 
-import java.math.BigDecimal;
-
 public class Orderitem {
     private String itemId;
     private Integer quantity;
-    private BigDecimal subTotal;
+    private double subTotal;
     private String bName;
-    private BigDecimal currPrice;
+    private double price;
     private String imageS;
     private Order order;
     private Book book;
+    private String bId;
+    private String orderId;
     
 
     public String getItemId() {
@@ -29,11 +29,11 @@ public class Orderitem {
         this.quantity = quantity;
     }
 
-    public BigDecimal getSubTotal() {
+    public double getSubTotal() {
         return subTotal;
     }
 
-    public void setSubTotal(BigDecimal subTotal) {
+    public void setSubTotal(double subTotal) {
         this.subTotal = subTotal;
     }
 
@@ -45,12 +45,12 @@ public class Orderitem {
         this.bName = bName == null ? null : bName.trim();
     }
 
-    public BigDecimal getCurrPrice() {
-        return currPrice;
+    public double getPrice() {
+        return price;
     }
 
-    public void setCurrPrice(BigDecimal currPrice) {
-        this.currPrice = currPrice;
+    public void setPrice(double currPrice) {
+        this.price = currPrice;
     }
 
     public String getImageS() {
@@ -75,5 +75,21 @@ public class Orderitem {
 
 	public void setBook(Book book) {
 		this.book = book;
+	}
+
+	public String getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
+
+	public String getbId() {
+		return bId;
+	}
+
+	public void setbId(String bId) {
+		this.bId = bId;
 	}
 }

@@ -11,6 +11,7 @@ public class Order {
     private String address;
     private User user;
     private List<Orderitem> item;
+    private String uId;
 
     public String getOrderId() {
         return orderId;
@@ -66,5 +67,13 @@ public class Order {
 
 	public void setItem(List<Orderitem> item) {
 		this.item = item;
+	}
+
+	public String getuId() {
+		return uId;
+	}
+
+	public void setuId(String uId) {
+		this.uId = uId;
 	}
 }

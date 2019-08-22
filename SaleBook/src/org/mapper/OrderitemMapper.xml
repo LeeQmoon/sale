@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mapper.OrderitemMapper">
+  <resultMap id="BaseResultMap" type="org.pojo.Orderitem">
+    <id column="item_id" jdbcType="CHAR" property="itemId" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="sub_total" jdbcType="DECIMAL" property="subTotal" />
+    <result column="b_id" jdbcType="CHAR" property="bId" />
+    <result column="b_name" jdbcType="VARCHAR" property="bName" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="image_s" jdbcType="VARCHAR" property="imageS" />
+    <result column="order_id" jdbcType="CHAR" property="orderId" />
+    <association property="book" javaType="Book">
+      <id column="b_id" property="bId" />
+      <result column="price" property="price" />
+  	</association>
+  	<association property="order" column="order_id" select="org.mapper.OrderMapper.load"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    item_id, quantity, sub_total, b_id, b_name, curr_price, image_s, order_id
+  </sql>
+  
+  <update id="updateSub" parameterType="map">
+      update orderitem left join book on book.b_id = orderitem.b_id
+      set orderitem.sub_total=orderitem.quantity*book.price
+      where orderitem.b_id = #{bid} and item_id = #{itemid}
+  </update>
+  
+  <select id="getSub" parameterType="map" resultType = "Double">
+      select sub_total
+      from orderitem
+      where orderitem.item_id=#{itemid}
+  </select>
+  
+  <select id="findByOid" parameterType="string" resultMap="BaseResultMap">
+  	select * 
+  	from orderitem 
+  	where order_id=#{orderid}
+  </select>
+  
+  <select id="load" parameterType="string" resultMap="BaseResultMap">
+  	select *
+  	from orderitem
+  	where item_id=#{itemid}
+  </select>
+  
+   <insert id="add" parameterType="map">
+  	insert into orderitem
+  		(
+  		item_id,
+  		quantity,
+  		b_id,
+  		b_name,
+  		price,
+  		order_id
+  		)
+  	values
+  		(
+  		#{itemid},
+  		#{quantity},
+  		#{bid},
+  		#{bname},
+  		#{price},
+  		#{orderid}
+  		)
+  </insert>
+  
+</mapper>

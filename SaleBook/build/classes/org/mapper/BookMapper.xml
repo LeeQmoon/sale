@@ -53,14 +53,11 @@
   		book
   </sql>
   
- <select id="findByBid" parameterType="string" resultMap="BaseResultMap">
-  	select 
-  		* 
+ <select id="findByBid" parameterType="string" resultType="Book">
+  	select b_id as bId,b_name as bName,author, price,press,publish_time as  publishTime,c_id as cId
   	from 
-  		book b,
-  		category c 
-  	where 
-  		b.c_id=c.c_id and b.b_id=#{bid}
+  		book b natural join category c 
+  	where  b.b_id=#{bid}
  </select>
   
   <select id="findByCategory" parameterType="map" resultMap="BaseResultMap">

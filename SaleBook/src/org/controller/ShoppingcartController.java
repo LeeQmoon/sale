@@ -33,28 +33,28 @@ public class ShoppingcartController {
 	@ResponseBody
 	public Map<String,Object> add(String bid,int quantity,ModelMap map,HttpServletRequest request){
 		User user = (User) request.getSession().getAttribute("sessionUser");
-		Shoppingcart shoppingCar = cart.getByUidAndBid(user.getuId(),bid);//看看数据库本身有么有这个购物车
-	    if(shoppingCar == null){//没有的话
-	        	Shoppingcart shoppingCar1 = new Shoppingcart();
-	            shoppingCar1.setUser(user);
-	            shoppingCar1.setuId(user.getuId());//设置用户id
-	            shoppingCar1.setbId(bid);//设置书的id
+		Shoppingcart cart1 = cart.getByUidAndBid(user.getuId(),bid);//看看数据库本身有么有这个购物车
+	    if(cart1 == null){//没有的话
+	        	Shoppingcart Car2 = new Shoppingcart();
+	        	Car2.setUser(user);
+	        	Car2.setuId(user.getuId());//设置用户id
+	        	Car2.setbId(bid);//设置书的id
 	            
-	            shoppingCar1.setQuantity(quantity);
-	            shoppingCar1.setSubTotal(shoppingCar1.getQuantity()*cart.getPri(bid));
-	            shoppingCar1.setCartId(UUID.randomUUID().toString().replace("-", "").toUpperCase());
-	            cart.add(shoppingCar1);
+	        	Car2.setQuantity(quantity);
+	        	Car2.setSubTotal(Car2.getQuantity()*cart.getPri(bid));
+	        	Car2.setCartId(UUID.randomUUID().toString().replace("-", "").toUpperCase());
+	            cart.add(Car2);
 	            System.out.println("我进入了");
-	            System.out.print("cartid====="+shoppingCar1.getCartId()+"  Bookid"+shoppingCar1.getbId()+"  quantity" +shoppingCar1.getQuantity()
-	            +"  subtotal"+shoppingCar1.getSubTotal());
+	            System.out.print("cartid====="+Car2.getCartId()+"  Bookid"+Car2.getbId()+"  quantity" +Car2.getQuantity()
+	            +"  subtotal"+Car2.getSubTotal());
 	        }
 	        else{//有的话
-	            shoppingCar.setQuantity(shoppingCar.getQuantity()+quantity);
-	            shoppingCar.setSubTotal(shoppingCar.getQuantity()*cart.getPri(bid));
-	            cart.updateShoppingCar(shoppingCar);
+	        	cart1.setQuantity(cart1.getQuantity()+quantity);
+	        	cart1.setSubTotal(cart1.getQuantity()*cart.getPri(bid));
+	            cart.updateShoppingCar(cart1);
 	            System.out.println("已经存在！");
-	            System.out.print("cartid====="+shoppingCar.getCartId()+"  Bookid"+shoppingCar.getbId()+"  quantity" +shoppingCar.getQuantity()
-	            +"  subtotal==="+shoppingCar.getSubTotal());
+	            System.out.print("cartid====="+cart1.getCartId()+"  Bookid"+cart1.getbId()+"  quantity" +cart1.getQuantity()
+	            +"  subtotal==="+cart1.getSubTotal());
 	        }
 	    //这段话是为了测试使用，返回给前端表明已经添加成功
 	        Map<String, Object> resultMap = new HashMap<String,Object>();

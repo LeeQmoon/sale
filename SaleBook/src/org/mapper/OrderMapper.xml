@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mapper.OrderMapper">
+  <resultMap id="BaseResultMap" type="org.pojo.Order">
+    <id column="order_id" jdbcType="CHAR" property="orderId" />
+    <result column="order_time" jdbcType="CHAR" property="orderTime" />
+    <result column="total_money" jdbcType="DECIMAL" property="totalMoney" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="u_id" jdbcType="CHAR" property="uId" />
+  <association property="user" column="u_id" javaType="User">
+      <id column="u_id" property="uId" />
+    	<result property="nickName" column="nick_name"/>
+    </association>
+    <collection property="orderitem" column="item_id" select="org.mapper.OrderitemMapper.findByItemid"/>
+  </resultMap>
+	
+  <sql id="Base_Column_List">
+    order_id, order_time, total_money, status, address, u_id
+  </sql>
+  <select id="select_*_sql">
+      select order_id,order_time,total,status,address,u_id
+	from
+		myorder
+  </select>
+   <update id="updateStatus" parameterType="map">
+  	update myorder 
+  	set status=#{status}
+  	where order_id=#{orderid} and order.u_id=#{uid}
+  </update>
+  <!-- 先插入部分的数据 -->
+  <insert id="add" parameterType="map">
+  	insert into myorder(order_id, order_time,status,u_id)values 
+  	(
+  	#{orderid},
+  	#{ordertime},
+  	#{status},
+  	#{uid}
+  	)
+  </insert>
+  <update id ="updateTotal" parameterType="map">
+      update myorder
+      set total_money=#{total}
+      where order_id=#{orderid}
+  </update>
+  
+  <select id="findByStatus" parameterType="map" resultMap="BaseResultMap">
+  	select *
+  	from myorder
+  	where status=#{status} and order.u_id=#{uid}
+  	order by ordertime desc
+  	limit #{start},#{ps}
+  </select>
+  
+  <select id="findByUser" parameterType="map" resultMap="BaseResultMap">
+  	select *
+  	from myorder
+  	where u_id=#{uid}
+  	order by ordertime desc
+  	limit #{start},#{ps}
+  </select>
+  
+  <select id="findAll" parameterType="map" resultMap="BaseResultMap">
+  	select *
+  	from myorder
+  	where myorder.u_id=#{uid}
+  	order by ordertime desc
+  	limit #{start},#{ps}
+  </select>
+  <!-- 为了关联查询使用 -->
+  <select id="load" parameterType="string" resultMap="BaseResultMap">
+  	select *
+  	from myorder
+  	where order_id=#{oid}
+  </select>
+  
+</mapper>
