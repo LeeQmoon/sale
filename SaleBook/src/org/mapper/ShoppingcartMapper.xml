@@ -12,13 +12,20 @@
       <id column="u_id" property="uId" />
   	</association>
   	<collection property="book" javaType="Book">
-			<id column="u_id" property="uId"/>
+			<id column="b_id" property="bId"/>
+			<result column="price" property="price" />
 	</collection>
 </resultMap>
   
-  <update id="updateQuantity" parameterType="map">
+  <select id="getPrice" parameterType="map" resultType="Double">
+      select book.price
+      from book
+      where book.b_id=#{bid}
+  </select>
+  
+  <update id="update" parameterType="map">
   	update shoppingcart
-  	set quantity=#{quantity}
+  	set quantity=#{quantity}, sub_total=#{subtotal}
   	where cart_id=#{cartid}
   </update>
   
@@ -46,7 +53,8 @@
   </select>
   
   <delete id="delete" parameterType="map">
-  	delete from shoppingcart left join book on book.b_id = shoppingcart.b_id
+  	delete from shoppingcart 
+  	where shoppingcart.b_id = #{bid} and shoppingcart.u_id = #{uid}
   </delete>
   
   <select id="findByCartId" parameterType="string" resultMap="BaseResultMap">

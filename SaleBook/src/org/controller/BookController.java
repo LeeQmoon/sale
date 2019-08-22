@@ -23,7 +23,7 @@ public class BookController {
 	private IBookService book_service;
 	
 	//前端如何把页数跟类名传过来
-/*	//把当前页数传来，url也传来，调用后端的，查询这页所对应的书录
+	//把当前页数传来，url也传来，调用后端的，查询这页所对应的书录
 	@RequestMapping("/findByCategory.action")
 	public String findByCategory(@RequestParam(required=true,defaultValue="0")Integer page,String cname,ModelMap map,HttpServletRequest request){
 		//前端传来当前页以及查询的名字 如何从前端把页面传到后台
@@ -56,7 +56,7 @@ public class BookController {
 		map.put("pageinfo", pb);//把modelandview返回给前端
 		
 		return "/jsp/list";
-	}*/
+	}
 	
 	//按首页之后会出现所有书
 	@RequestMapping("/findAll.action")

@@ -6,9 +6,12 @@ public class Shoppingcart {
     private String cartId;
     private Integer quantity;
     private double subTotal;
+    private Integer orderBy;
+    private String uId;//所属的用户
+    private String bId;//所含书
     private User user;//所属的用户
     private Book book;//所含书
-
+    
     public String getCartId() {
         return cartId;
     }
@@ -25,6 +28,30 @@ public class Shoppingcart {
         this.quantity = quantity;
     }
 
+	public double getSubTotal() {
+		return subTotal;
+	}
+
+	public void setSubTotal(double subTotal) {
+		this.subTotal = subTotal;
+	}
+
+	public String getbId() {
+		return bId;
+	}
+
+	public void setbId(String bId) {
+		this.bId = bId;
+	}
+
+	public String getuId() {
+		return uId;
+	}
+
+	public void setuId(String uId) {
+		this.uId = uId;
+	}
+
 	public User getUser() {
 		return user;
 	}
@@ -37,17 +64,18 @@ public class Shoppingcart {
 		return book;
 	}
 
-	public void setBook(Book book) {
-		this.book = book;
+	public void setBook(Book bookS) {
+		this.book = bookS;
 	}
 
-	public double getSubTotal() {
-		return subTotal;
+	public Integer getOrderBy() {
+		return orderBy;
 	}
 
-	public void setSubTotal(double subTotal) {
-		this.subTotal = subTotal;
+	public void setOrderBy(Integer orderBy) {
+		this.orderBy = orderBy;
 	}
+
 }
 
   

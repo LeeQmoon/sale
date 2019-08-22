@@ -19,8 +19,8 @@ if (x==null || x==""){
 
 <body>
 hello....
-<form name="myForm" action="${pageContext.request.contextPath }/book/findByBname.action" onsubmit="return validateForm()" method="post">
- <input type="text" name = "bname" >   
+<form name="myForm" action="${pageContext.request.contextPath }/book/findByCategory.action" onsubmit="return validateForm()" method="post">
+ <input type="text" name = "cname" >   
  <input type="submit" value="查询">
 </form> 
 

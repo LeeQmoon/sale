@@ -21,7 +21,7 @@ public class BookServiceImpl implements IBookService{
 	private BookMapper book_dao;
 	int ps = PageConstant.BOOK_PAGE_SIZE;
 	
-/*	//通过分类来查询相应的书录
+	//通过分类来查询相应的书录
 	@Override
 	public PageInfo<Book> findByCategory(String cname, int pc){
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -64,7 +64,7 @@ public class BookServiceImpl implements IBookService{
 		PageInfo<Book> pageinfo = toPageBean(bookList, pc);//转为分页
 		return pageinfo;
 	}
-	*/
+	
 	//查询所有的书
 	@Override
 	public PageInfo<Book> findAll(int pc){

@@ -9,11 +9,13 @@
 <%@ page import="com.github.pagehelper.PageInfo" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<script src="../js/jqui/jquery/jquery-1.5.2.min.js" type="text/javascript"></script>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>三味书屋</title>
 </head>
 <body>
+
 
 <table frame="box" rules="all">
     <tr>
@@ -32,11 +34,17 @@
                 <td>${book.author}</td>
            		<td>${book.press}</td>
            		<td>${book.price}</td>
-           		<td><input type="submit" value="加入购物车">  <input type="button" value="查看详情"></td>
+           		<td><input type="button" value="查看详情"></td>
+           		</td>
             </tr>
         </c:forEach>
     </c:if>
 </table>
+ <form name="myForm" action="${pageContext.request.contextPath }/cart/add.action" method="post">
+ 					<input type="text" name = "bid">   
+ 					<input type="submit" value="加入购物车">
+				</form> 
+<a href="${pageContext.request.contextPath }/cart/delete.action"><input type="button" value="删除"></a>
 <p>一共${pageinfo.getPages()}页</p>
         <a href="/SaleBook/book/findAll.action?page=${pageinfo.nextPage}">下一页</a>
         <a href="/SaleBook/book/findAll.action?page=${pageinfo.prePage}">上一页</a>

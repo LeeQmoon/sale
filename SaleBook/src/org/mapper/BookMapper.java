@@ -18,7 +18,6 @@ public interface BookMapper {
 	
 	public List<Book> findByPress(Map<String,Object> map) throws SQLException;
 	//查询所有的书在首页展示
-
 	public List<Book> findAll();
 	//为了在购物车中关联查询使用
 	public Book findByBid(String bid) throws SQLException;

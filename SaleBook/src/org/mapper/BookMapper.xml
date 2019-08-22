@@ -60,7 +60,7 @@
   		book b,
   		category c 
   	where 
-  		b.c_id=c.cid and b.b_id=#{bid}
+  		b.c_id=c.c_id and b.b_id=#{bid}
  </select>
   
   <select id="findByCategory" parameterType="map" resultMap="BaseResultMap">
