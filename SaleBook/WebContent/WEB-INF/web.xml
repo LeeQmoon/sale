@@ -16,6 +16,18 @@
      <url-pattern>*.action</url-pattern>
   </servlet-mapping>
    
+  <servlet>
+      <servlet-name>default</servlet-name>
+      </servlet>
+  <servlet-mapping>
+ 	<servlet-name>default</servlet-name>
+ 	<url-pattern>*.css</url-pattern>
+ 	<url-pattern>*.js</url-pattern>
+ 	<url-pattern>*.png</url-pattern>
+ 	<url-pattern>*.gif</url-pattern>
+ 	<url-pattern>*.jpg</url-pattern>	
+</servlet-mapping>
+  
   <!-- 只对post有用，这个是防止在controller出现中文乱码得问题
   如果没有这个设置，在注册输入中文时，在mysql里查询会出现乱码 -->
     <filter>
@@ -32,7 +44,7 @@
   </filter-mapping>
   
   <welcome-file-list>
-    <welcome-file>welcome.jsp</welcome-file>
+    <welcome-file>/jsp/user/login.jsp</welcome-file>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
     <welcome-file>index.jsp</welcome-file>
